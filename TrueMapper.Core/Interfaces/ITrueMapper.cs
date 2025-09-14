@@ -48,5 +48,21 @@ namespace TrueMapper.Core.Interfaces
         /// </summary>
         /// <returns>Performance metrics</returns>
         IMappingMetrics GetMetrics();
+
+        /// <summary>
+        /// Maps an object to TDestination (AutoMapper-style with single generic)
+        /// </summary>
+        /// <typeparam name="TDestination">Destination object type</typeparam>
+        /// <param name="source">Source object to map from</param>
+        /// <returns>Mapped destination object</returns>
+        TDestination Map<TDestination>(object source) where TDestination : new();
+
+        /// <summary>
+        /// Maps a collection to List&lt;TDestination&gt; (AutoMapper-style with single generic)
+        /// </summary>
+        /// <typeparam name="TDestination">Destination object type</typeparam>
+        /// <param name="source">Collection of source objects</param>
+        /// <returns>List of mapped destination objects</returns>
+        List<TDestination> Map<TDestination>(IEnumerable<object> source) where TDestination : new();
     }
 }

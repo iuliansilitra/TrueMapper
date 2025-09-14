@@ -234,3 +234,76 @@ public enum Status
     Active,
     Pending
 }
+
+public class AutoMapperStyleTests
+{
+    [Fact]
+    public void AutoMapperStyle_SingleMapping_ShouldWork()
+    {
+        // Arrange
+        var mapper = new Core.Core.TrueMapper();
+        var source = new SourcePerson
+        {
+            FirstName = "John",
+            LastName = "Doe",
+            Age = 30,
+            Email = "john.doe@example.com"
+        };
+
+        // Act - folosește stilul AutoMapper cu un singur generic
+        var destination = mapper.Map<DestinationPerson>(source);
+
+        // Assert
+        Assert.Equal(source.FirstName, destination.FirstName);
+        Assert.Equal(source.LastName, destination.LastName);
+        Assert.Equal(source.Age, destination.Age);
+        Assert.Equal(source.Email, destination.Email);
+    }
+
+    [Fact]
+    public void AutoMapperStyle_ListMapping_ShouldWork()
+    {
+        // Arrange
+        var mapper = new Core.Core.TrueMapper();
+        var sourceList = new List<object>
+        {
+            new SourcePerson { FirstName = "John", LastName = "Doe", Age = 30 },
+            new SourcePerson { FirstName = "Jane", LastName = "Smith", Age = 25 }
+        };
+
+        // Act - mapează direct la List<DestinationPerson>
+        var destinationList = mapper.Map<DestinationPerson>(sourceList);
+
+        // Assert
+        Assert.Equal(2, destinationList.Count);
+        Assert.Equal("John", destinationList[0].FirstName);
+        Assert.Equal("Jane", destinationList[1].FirstName);
+        Assert.Equal(30, destinationList[0].Age);
+        Assert.Equal(25, destinationList[1].Age);
+    }
+
+    [Fact]
+    public void AutoMapperStyle_MixedObjectTypes_ShouldWork()
+    {
+        // Arrange
+        var mapper = new Core.Core.TrueMapper();
+        
+        // Testează cu un obiect de tip diferit
+        var source = new
+        {
+            FirstName = "Alice",
+            LastName = "Johnson",
+            Age = 28,
+            Email = "alice@example.com"
+        };
+
+        // Act - mapează obiect anonim la DestinationPerson
+        var destination = mapper.Map<DestinationPerson>(source);
+
+        // Assert
+        Assert.Equal(source.FirstName, destination.FirstName);
+        Assert.Equal(source.LastName, destination.LastName);
+        Assert.Equal(source.Age, destination.Age);
+        Assert.Equal(source.Email, destination.Email);
+    }
+}

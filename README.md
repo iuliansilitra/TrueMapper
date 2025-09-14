@@ -2,7 +2,7 @@
 
 🚀 **TrueMapper** - Advanced Object Mapping Library for .NET
 
-TrueMapper is a powerful, feature-rich object-to-object mapping library for .NET that goes beyond traditional mapping solutions. It provides smart type conversion, conditional mapping, middleware support, circular reference detection, performance metrics, and much more.
+TrueMapper is a powerful, feature-rich object-to-object mapping library for .NET that goes beyond traditional mapping sol## 🛡️ Advanced Featuress smart type conversion, conditional mapping, middleware support, circular reference detection, performance metrics, and much more.
 
 ## ✨ Key Features
 
@@ -71,6 +71,26 @@ var destinationList = sourceList.MapTo<DestinationClass>();
 
 // Deep cloning
 var cloned = source.DeepClone();
+```
+
+### Alternative API Syntax
+
+TrueMapper supports flexible API usage patterns:
+
+```csharp
+using TrueMapper.Core.Core;
+
+var mapper = new TrueMapper();
+
+// Standard mapping with both type parameters
+var result1 = mapper.Map<SourceClass, DestinationClass>(source);
+
+// Simplified mapping with destination type inference
+var result2 = mapper.Map<DestinationClass>(source);
+
+// Collection mapping
+var sourceList = new List<object> { source };
+var destinationList = mapper.Map<DestinationClass>(sourceList);
 ```
 
 ### Advanced Configuration
@@ -183,6 +203,7 @@ Console.WriteLine($"Circular refs detected: {metrics.CircularReferencesDetected}
 
 | Feature | TrueMapper | AutoMapper |
 |---------|------------|------------|
+| **API Compatibility** | ✅ **AutoMapper + TrueMapper syntax** | ✅ AutoMapper syntax |
 | Smart Type Conversion | ✅ Advanced | ⚠️ Basic |
 | Conditional Mapping | ✅ Built-in | ❌ Manual |
 | Middleware Support | ✅ Full Pipeline | ❌ No |
@@ -193,6 +214,7 @@ Console.WriteLine($"Circular refs detected: {metrics.CircularReferencesDetected}
 | Profile Auto-Discovery | ✅ Yes | ⚠️ Manual |
 | Deep Cloning | ✅ Optimized | ❌ No |
 | Async Support | ✅ Middleware | ⚠️ Limited |
+| **Migration Path** | ✅ **Drop-in replacement** | N/A |
 
 ## 📊 Performance Benchmarks
 

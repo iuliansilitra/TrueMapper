@@ -41,6 +41,13 @@ namespace TrueMapper.Core.Core
             _circularReferenceTracker = new HashSet<object>(ReferenceEqualityComparer.Instance);
         }
 
+        /// <summary>
+        /// Maps an object of type TSource to TDestination
+        /// </summary>
+        /// <typeparam name="TSource">Source object type</typeparam>
+        /// <typeparam name="TDestination">Destination object type</typeparam>
+        /// <param name="source">Source object to map from</param>
+        /// <returns>Mapped destination object</returns>
         public TDestination Map<TSource, TDestination>(TSource source) where TDestination : new()
         {
             if (source == null)
@@ -64,6 +71,14 @@ namespace TrueMapper.Core.Core
             }
         }
 
+        /// <summary>
+        /// Maps an object of type TSource to an existing TDestination instance
+        /// </summary>
+        /// <typeparam name="TSource">Source object type</typeparam>
+        /// <typeparam name="TDestination">Destination object type</typeparam>
+        /// <param name="source">Source object to map from</param>
+        /// <param name="destination">Existing destination object to map to</param>
+        /// <returns>Updated destination object</returns>
         public TDestination Map<TSource, TDestination>(TSource source, TDestination destination)
         {
             if (source == null || destination == null)
@@ -86,6 +101,13 @@ namespace TrueMapper.Core.Core
             }
         }
 
+        /// <summary>
+        /// Maps a collection of objects from TSource to TDestination
+        /// </summary>
+        /// <typeparam name="TSource">Source object type</typeparam>
+        /// <typeparam name="TDestination">Destination object type</typeparam>
+        /// <param name="source">Collection of source objects</param>
+        /// <returns>Collection of mapped destination objects</returns>
         public IEnumerable<TDestination> Map<TSource, TDestination>(IEnumerable<TSource> source) 
             where TDestination : new()
         {
@@ -109,6 +131,12 @@ namespace TrueMapper.Core.Core
             }
         }
 
+        /// <summary>
+        /// Creates a deep clone of an object
+        /// </summary>
+        /// <typeparam name="T">Type of object to clone</typeparam>
+        /// <param name="source">Object to clone</param>
+        /// <returns>Deep cloned object</returns>
         public T Clone<T>(T source) where T : new()
         {
             if (source == null)
@@ -119,6 +147,10 @@ namespace TrueMapper.Core.Core
             return Map<T, T>(source);
         }
 
+        /// <summary>
+        /// Gets performance metrics for mapping operations
+        /// </summary>
+        /// <returns>Performance metrics</returns>
         public IMappingMetrics GetMetrics()
         {
             return _metrics;
@@ -367,6 +399,69 @@ namespace TrueMapper.Core.Core
                 return Activator.CreateInstance(type);
             }
             return null;
+        }
+
+        /// <summary>
+        /// Maps an object to TDestination (AutoMapper-style with single generic)
+        /// </summary>
+        /// <typeparam name="TDestination">Destination object type</typeparam>
+        /// <param name="source">Source object to map from</param>
+        /// <returns>Mapped destination object</returns>
+        public TDestination Map<TDestination>(object source) where TDestination : new()
+        {
+            if (source == null)
+            {
+                return _configuration.GetGlobalSettings().PropagateNulls ? default! : new TDestination();
+            }
+
+            var stopwatch = Stopwatch.StartNew();
+            try
+            {
+                var destination = new TDestination();
+                
+                // Use reflection to call the generic MapInternal method
+                var sourceType = source.GetType();
+                var mapInternalMethod = typeof(TrueMapper).GetMethod("MapInternal", BindingFlags.NonPublic | BindingFlags.Instance);
+                var genericMapInternal = mapInternalMethod!.MakeGenericMethod(sourceType, typeof(TDestination));
+                
+                return (TDestination)genericMapInternal.Invoke(this, new object[] { source, destination })!;
+            }
+            finally
+            {
+                stopwatch.Stop();
+                if (_configuration.GetGlobalSettings().CollectMetrics)
+                {
+                    _metrics.RecordMapping(stopwatch.Elapsed.TotalMilliseconds);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Maps a collection to List&lt;TDestination&gt; (AutoMapper-style with single generic)
+        /// </summary>
+        /// <typeparam name="TDestination">Destination object type</typeparam>
+        /// <param name="source">Collection of source objects</param>
+        /// <returns>List of mapped destination objects</returns>
+        public List<TDestination> Map<TDestination>(IEnumerable<object> source) where TDestination : new()
+        {
+            if (source == null)
+            {
+                return new List<TDestination>();
+            }
+
+            var stopwatch = Stopwatch.StartNew();
+            try
+            {
+                return source.Select(item => Map<TDestination>(item)).ToList();
+            }
+            finally
+            {
+                stopwatch.Stop();
+                if (_configuration.GetGlobalSettings().CollectMetrics)
+                {
+                    _metrics.RecordMapping(stopwatch.Elapsed.TotalMilliseconds);
+                }
+            }
         }
     }
 }
