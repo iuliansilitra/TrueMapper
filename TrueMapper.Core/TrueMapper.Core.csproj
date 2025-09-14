@@ -8,7 +8,7 @@
     
     <!-- NuGet Package Information -->
     <PackageId>TrueMapper</PackageId>
-    <PackageVersion>1.0.3</PackageVersion>
+        <Version>1.0.6</Version>
     <Title>TrueMapper - Advanced Object Mapping Library</Title>
     <Authors>Iulian Silitra</Authors>
     <Description>TrueMapper is an advanced object-to-object mapping library for .NET with smart type conversion, conditional mapping, middleware support, circular reference detection, and performance metrics. A powerful library with unique features for complex mapping scenarios.</Description>
@@ -21,6 +21,18 @@
     <PackageIcon>logo.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
+      v1.0.5:
+      - VERIFIED: Interface methods included for flexible API
+      - Map&lt;TDestination&gt;(object source) fully functional
+      - Map&lt;TDestination&gt;(IEnumerable&lt;object&gt; source) fully functional
+      - Complete rebuild with clean cache to ensure proper packaging
+      
+      v1.0.4:
+      - Fixed interface definition to include new flexible API methods
+      - Added Map&lt;TDestination&gt;(object source) to interface
+      - Added Map&lt;TDestination&gt;(IEnumerable&lt;object&gt; source) to interface
+      - Complete API compatibility for simplified mapping syntax
+      
       v1.0.3:
       - Added flexible API syntax with destination type inference
       - Enhanced mapping capabilities for simplified usage

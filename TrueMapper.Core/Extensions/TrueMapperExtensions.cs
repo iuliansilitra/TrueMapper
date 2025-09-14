@@ -32,10 +32,7 @@ namespace TrueMapper.Core.Extensions
         /// <returns>Mapped destination object</returns>
         public static TDestination MapTo<TDestination>(this object source) where TDestination : new()
         {
-            var sourceType = source?.GetType() ?? typeof(object);
-            var mapMethod = typeof(Core.TrueMapper).GetMethod(nameof(Core.TrueMapper.Map))
-                ?.MakeGenericMethod(sourceType, typeof(TDestination));
-            return (TDestination)(mapMethod?.Invoke(_defaultMapper, new[] { source }) ?? Activator.CreateInstance<TDestination>());
+            return _defaultMapper.Map<TDestination>(source);
         }
 
         /// <summary>
