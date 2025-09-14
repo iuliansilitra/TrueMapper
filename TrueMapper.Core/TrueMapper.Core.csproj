@@ -1,0 +1,41 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net7.0;net8.0;net9.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <LangVersion>11.0</LangVersion>
+    
+    <!-- NuGet Package Information -->
+    <PackageId>TrueMapper</PackageId>
+    <PackageVersion>1.0.0</PackageVersion>
+    <Title>TrueMapper - Advanced Object Mapping Library</Title>
+    <Authors>Iulian Silitra</Authors>
+    <Description>TrueMapper is an advanced object-to-object mapping library for .NET with smart type conversion, conditional mapping, middleware support, circular reference detection, and performance metrics. A powerful library with unique features for complex mapping scenarios.</Description>
+    <PackageTags>mapper;mapping;object-mapping;conversion;dto;performance;middleware;circular-reference</PackageTags>
+    <PackageProjectUrl>https://github.com/iuliansilitra/TrueMapper</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/iuliansilitra/TrueMapper</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <PackageReleaseNotes>
+      v1.0.0:
+      - Smart type conversion with advanced logic
+      - Conditional mapping support
+      - Middleware pipeline for custom transformations
+      - Circular reference detection and handling
+      - Performance metrics and monitoring
+      - Deep object cloning capabilities
+      - Fluent configuration API
+      - Auto-discovery mapping profiles
+      - Collection mapping with type safety
+      - Extensive validation and error handling
+    </PackageReleaseNotes>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageOutputPath>bin\$(Configuration)\</PackageOutputPath>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+</Project>
