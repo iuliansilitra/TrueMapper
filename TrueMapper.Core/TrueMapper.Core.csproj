@@ -8,11 +8,11 @@
     
     <!-- NuGet Package Information -->
     <PackageId>TrueMapper</PackageId>
-        <Version>1.0.6</Version>
+        <Version>1.1.0</Version>
     <Title>TrueMapper - Advanced Object Mapping Library</Title>
     <Authors>Iulian Silitra</Authors>
-    <Description>TrueMapper is an advanced object-to-object mapping library for .NET with smart type conversion, conditional mapping, middleware support, circular reference detection, and performance metrics. A powerful library with unique features for complex mapping scenarios.</Description>
-    <PackageTags>mapper;mapping;object-mapping;conversion;dto;performance;middleware;circular-reference</PackageTags>
+    <Description>TrueMapper is an advanced object-to-object mapping library for .NET with intuitive MapTo() extension methods, comprehensive collection support, smart type conversion, conditional mapping, middleware support, circular reference detection, and performance metrics. Features intelligent type routing and proper collection handling.</Description>
+    <PackageTags>mapper;mapping;object-mapping;conversion;dto;performance;middleware;circular-reference;collections;extensions</PackageTags>
     <PackageProjectUrl>https://github.com/iuliansilitra/TrueMapper</PackageProjectUrl>
     <RepositoryUrl>https://github.com/iuliansilitra/TrueMapper</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
@@ -21,7 +21,14 @@
     <PackageIcon>logo.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageReleaseNotes>
-      v1.0.5:
+      v1.1.0 - MAJOR UPDATE:
+      - NEW: Intuitive MapTo&lt;T&gt;() extension methods for fluent object mapping
+      - NEW: Comprehensive collection mapping support (List, Array, HashSet, Queue, Stack, etc.)
+      - NEW: Intelligent type routing: obj.MapTo&lt;Type&gt;() vs collection.MapTo&lt;List&lt;Type&gt;&gt;()
+      - ENHANCED: Perfect collection handling with proper null propagation
+      - IMPROVED: Clear error messages for invalid mapping scenarios
+      
+      v1.0.6:
       - VERIFIED: Interface methods included for flexible API
       - Map&lt;TDestination&gt;(object source) fully functional
       - Map&lt;TDestination&gt;(IEnumerable&lt;object&gt; source) fully functional

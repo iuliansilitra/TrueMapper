@@ -2,9 +2,21 @@
 
 🚀 **TrueMapper** - Advanced Object Mapping Library for .NET
 
-TrueMapper is a powerful, feature-rich object-to-object mapping library for .NET that goes beyond traditional mapping sol## 🛡️ Advanced Featuress smart type conversion, conditional mapping, middleware support, circular reference detection, performance metrics, and much more.
+TrueMapper is a powerful, feature-rich object-to-object mapping library for .NET that provides intuitive MapTo() extension methods, comprehensive collection support, smart type conversion, conditional mapping, middleware support, circular reference detection, performance metrics, and much more.
 
 ## ✨ Key Features
+
+### 🎯 **Intuitive Extension Methods**
+- Fluent `MapTo<T>()` API for seamless object mapping
+- Intelligent type routing: `obj.MapTo<Type>()` vs `collection.MapTo<List<Type>>()`
+- Clear error messages for invalid mapping scenarios
+- Zero-configuration setup for most use cases
+
+### 📋 **Comprehensive Collection Support**
+- Support for all major .NET collection types: `List<T>`, `T[]`, `HashSet<T>`, `Queue<T>`, `Stack<T>`, `LinkedList<T>`
+- Observable and concurrent collections: `ObservableCollection<T>`, `ConcurrentBag<T>`, `ConcurrentQueue<T>`, etc.
+- Proper null handling in collection mappings
+- Strongly-typed collection transformations
 
 ### 🎯 **Smart Type Conversion**
 - Intelligent type conversion with advanced logic
@@ -58,24 +70,57 @@ dotnet add package TrueMapper
 ### Basic Usage
 
 ```csharp
-using TrueMapper.Core.Core;
 using TrueMapper.Core.Extensions;
 
-// Simple object mapping
+// Simple object mapping with fluent API
 var source = new SourceClass { Name = "John", Age = 30 };
 var destination = source.MapTo<DestinationClass>();
 
-// Collection mapping
+// Collection mapping to List<T>
 var sourceList = new List<SourceClass> { source };
-var destinationList = sourceList.MapTo<DestinationClass>();
+var destinationList = sourceList.MapTo<List<DestinationClass>>();
 
-// Deep cloning
-var cloned = source.DeepClone();
+// Collection mapping to different collection types
+var destinationArray = sourceList.MapTo<DestinationClass[]>();
+var destinationHashSet = sourceList.MapTo<HashSet<DestinationClass>>();
+
+// Anonymous objects
+var anonymousSource = new { Name = "Jane", Age = 25 };
+var result = anonymousSource.MapTo<DestinationClass>();
 ```
 
-### Alternative API Syntax
+### Intelligent Type Routing
 
-TrueMapper supports flexible API usage patterns:
+TrueMapper automatically routes to the appropriate mapping logic:
+
+```csharp
+// Single object mapping
+Person person = new Person { Name = "John" };
+PersonDto dto = person.MapTo<PersonDto>();  // Returns PersonDto
+
+// Collection mapping
+List<Person> people = GetPeople();
+List<PersonDto> dtos = people.MapTo<List<PersonDto>>();  // Returns List<PersonDto>
+
+// Error: Invalid mapping (collection to single object)
+var invalid = people.MapTo<PersonDto>();  // Throws clear error message
+```
+
+### Advanced Collection Support
+
+```csharp
+var sourceList = GetSourceItems();
+
+// Various collection types supported
+var list = sourceList.MapTo<List<DestinationItem>>();
+var array = sourceList.MapTo<DestinationItem[]>();
+var hashSet = sourceList.MapTo<HashSet<DestinationItem>>();
+var queue = sourceList.MapTo<Queue<DestinationItem>>();
+var stack = sourceList.MapTo<Stack<DestinationItem>>();
+var observableCollection = sourceList.MapTo<ObservableCollection<DestinationItem>>();
+```
+
+### Traditional API (still supported)
 
 ```csharp
 using TrueMapper.Core.Core;
